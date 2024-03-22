@@ -7,6 +7,8 @@ import maleFirstNames from './maleFirstNames';
 import femaleFirstNames from './femaleFirstNames';
 import lastNames from './lastNames';
 
+const genders = ['male', 'female'];
+
 function App() {
   const [selectedGender, setSelectedGender] = useState('male');
   const [selectedRace, setSelectedRace] = useState('');
@@ -15,46 +17,50 @@ function App() {
   const [generateClicked, setGenerateClicked] = useState(false);
 
   const handleGenderChange = (event) => {
-    setSelectedGender(event.target.value);
+    const selectedValue = event.target.value;
+    setSelectedGender(selectedValue === 'random' ? randomOption(genders) : selectedValue);
   };
-
+  
   const handleRaceChange = (event) => {
-    setSelectedRace(event.target.value);
+    const selectedValue = event.target.value;
+    setSelectedRace(selectedValue === 'random' ? randomOption(races) : selectedValue);
   };
-
+  
   const handleCultureChange = (event) => {
-    setSelectedCulture(event.target.value);
+    const selectedValue = event.target.value;
+    setSelectedCulture(selectedValue === 'random' ? randomOption(cultures) : selectedValue);
+  };
+  
+  const randomOption = (options) => {
+    const randomIndex = Math.floor(Math.random() * options.length);
+    return options[randomIndex];
   };
 
   const generateSingleName = () => {
-    if (!selectedRace || !selectedCulture) {
-      alert('Please select a race and culture.');
-      return;
-    }
+    const race = selectedRace || randomOption(races);
+    const culture = selectedCulture || randomOption(cultures);
 
-    const firstName = selectedGender === 'male' ? maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)] : femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)];
-    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-    const name = `${selectedRace} ${selectedCulture} ${firstName} ${lastName}`;
+    const firstName = selectedGender === 'male' ? randomOption(maleFirstNames) : randomOption(femaleFirstNames);
+    const lastName = randomOption(lastNames);
+    const name = `${race} ${culture} ${firstName} ${lastName}`;
+    
     setGeneratedNames([name]);
     setGenerateClicked(true);
   };
 
   const generateTenNames = () => {
-    if (!selectedRace || !selectedCulture) {
-      alert('Please select a race and culture.');
-      return;
-    }
-  
     const tempNames = [];
     for (let i = 0; i < 10; i++) {
-      const firstName = selectedGender === 'male' ? maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)] : femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)];
-      const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-      tempNames.push(`${selectedRace} ${selectedCulture} ${firstName} ${lastName}`);
+      const race = selectedRace || randomOption(races);
+      const culture = selectedCulture || randomOption(cultures);
+      
+      const firstName = selectedGender === 'male' ? randomOption(maleFirstNames) : randomOption(femaleFirstNames);
+      const lastName = randomOption(lastNames);
+      tempNames.push(`${race} ${culture} ${firstName} ${lastName}`);
     }
     setGeneratedNames(tempNames);
     setGenerateClicked(true);
   };
-  
 
   return (
     <div>
@@ -67,13 +73,13 @@ function App() {
       />
       <Selector 
         label="Race" 
-        options={races} 
+        options={[...races]} 
         value={selectedRace} 
         onChange={handleRaceChange} 
       />
       <Selector 
         label="Culture" 
-        options={cultures} 
+        options={[...cultures]} 
         value={selectedCulture} 
         onChange={handleCultureChange} 
       />
