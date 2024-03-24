@@ -2,8 +2,8 @@ import React from 'react';
 
 const Selector = ({ label, options, value, onChange }) => {
   return (
-    <div>
-      <label>{label}:</label>
+    <div class="ddmenu">
+      <label>{label}: </label>
       <select value={value} onChange={onChange}>
         <option value="random">Random</option>
         {options.map((option) => (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; //import functions
 import NameGenerator from './NameGenerator';
 import Selector from './Selector';
 import races from './races';
@@ -6,8 +6,9 @@ import cultures from './cultures';
 import maleFirstNames from './maleFirstNames';
 import femaleFirstNames from './femaleFirstNames';
 import lastNames from './lastNames';
+import './styles.css';
 
-const genders = ['male', 'female'];
+const genders = ['male', 'female']; //too small to need its own file
 
 function App() {
   const [selectedGender, setSelectedGender] = useState('male');

@@ -1,5 +1,5 @@
 const cultures = [
-  "Krudeni tribe",
+  "Krudeni",
   "Human",
   "Chiropsoi",
   "Tegyan"
